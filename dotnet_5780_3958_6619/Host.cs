@@ -21,12 +21,13 @@ namespace dotnet_5780_3958_6619
             IEnumerable<HostingUnit> e = HostingUnitCollection;
 
             IEnumerator<HostingUnit> enumerator = e.GetEnumerator();
-
-            while (enumerator.MoveNext())
+            int counter = 0;
+            while (counter <numOfPlaces )
             {
                 for (int i = 0; i < 12;  i++)
                     for(int j=0;j<31;j++)
                         enumerator.Current.Diary[i,j]=false;
+                enumerator.MoveNext();
             }
             
 
