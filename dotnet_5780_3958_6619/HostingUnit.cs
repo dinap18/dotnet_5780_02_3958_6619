@@ -6,16 +6,54 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-    class HostingUnit
+    class HostingUnit: IComparable
     {
-       static int stSerialKey;
-        public int HostiningUnitKey;
+        //static byte[]stSerialKey = Guid.NewGuid().ToByteArray();
+        //  readonly public int HostiningUnitKey;
         public bool[,] Diary = new bool[12, 31];
-        public virtual string ToString();
-        public bool ApproveRequest(GuestRequest guestReq);
-        public int GetAnnualBusyDays();
-        public float GetAnnualBusyPercentege();
-       // int IComparable.compareTo(object obj);
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+        public bool ApproveRequest(GuestRequest guestReq)
+        {
 
+            return true;
+        }
+        public int GetAnnualBusyDays()
+        {
+            int counter = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    if (Diary[i, j] == true)
+                        counter++;
+
+                }
+            }
+            return counter;
+        }
+        public double  GetAnnualBusyPercentege()
+        {
+            int counter = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    if (Diary[i, j] == true)
+                        counter++;
+
+                }
+            }
+            return (counter / 3.75);
+        }
+       int IComparable.CompareTo(object obj)
+        {
+            return GetAnnualBusyDays().CompareTo(obj);
+        }
+
+        int HostingUnitKey;
+        public int []host;
     }
 }
