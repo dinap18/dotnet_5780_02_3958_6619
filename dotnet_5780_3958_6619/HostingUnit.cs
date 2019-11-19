@@ -34,7 +34,7 @@ namespace dotnet_5780_3958_6619
             }
             return counter;
         }
-        public double  GetAnnualBusyPercentege()
+        public double GetAnnualBusyPrecentege()
         {
             int counter = 0;
             for (int i = 0; i < 12; i++)
@@ -53,7 +53,7 @@ namespace dotnet_5780_3958_6619
             return GetAnnualBusyDays().CompareTo(obj);
         }
 
-        int HostingUnitKey;
+        public int HostingUnitKey;
         public int []host;
     }
 }

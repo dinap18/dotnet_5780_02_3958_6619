@@ -58,7 +58,7 @@ namespace dotnet_5780_3958_6619
                     }
                 }
                 //Create dictionary for all units <unitkey, occupancy_percentage>
-                Dictionary<long, float> dict = new Dictionary<long, float>();
+                Dictionary<long, double> dict = new Dictionary<long, double>();
                 foreach (var host in lsHosts)
                 {
                     //test Host IEnuramble is ok
@@ -68,7 +68,7 @@ namespace dotnet_5780_3958_6619
                     }
                 }
                 //get max value in dictionary
-                float maxVal = dict.Values.Max();
+                double maxVal = dict.Values.Max();
                 //get max value key name in dictionary
                 long maxKey =
                dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;

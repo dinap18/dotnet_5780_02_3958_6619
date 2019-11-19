@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-    internal class Host: HostingUnit
+    internal class Host: HostingUnit,IEnumerator
     {
         public int HostKey { get; set; }
 
-        public object Current => throw new NotImplementedException();
+       public object Current => throw new NotImplementedException();
 
         public List<HostingUnit> HostingUnitCollection;
   
@@ -54,6 +54,18 @@ namespace dotnet_5780_3958_6619
             return true;
         }
 
-        
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+        public int IEnumerator(object obj)
+        {
+            return 2;
+        }
     }
 }
