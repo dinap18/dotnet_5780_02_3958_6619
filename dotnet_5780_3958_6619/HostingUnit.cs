@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-    class HostingUnit: IComparable
+    class HostingUnit : GuestRequest, IComparable 
     {
-        //static byte[]stSerialKey = Guid.NewGuid().ToByteArray();
-        //  readonly public int HostiningUnitKey;
+       public static int stSerialKey;
         public bool[,] Diary = new bool[12, 31];
         public override string ToString()
         {
@@ -34,26 +33,37 @@ namespace dotnet_5780_3958_6619
             }
             return counter;
         }
-        public double GetAnnualBusyPrecentege()
+        public float GetAnnualBusyPercentage()
         {
-            int counter = 0;
+            float counter = 0;
             for (int i = 0; i < 12; i++)
             {
                 for (int j = 0; j < 31; j++)
                 {
                     if (Diary[i, j] == true)
                         counter++;
-
                 }
             }
-            return (counter / 3.75);
-        }
-       int IComparable.CompareTo(object obj)
-        {
-            return GetAnnualBusyDays().CompareTo(obj);
+            return (float)(counter / 3.75);
         }
 
-        public int HostingUnitKey;
-        public int []host;
+        int IComparable.CompareTo(object obj)
+        {
+            return this.GetAnnualBusyDays().CompareTo(obj);
+        }
+
+
+
+     static int HostingUnitKey
+        {
+            set { }
+            get { return stSerialKey; }
+        }
+        public int[] host;
     }
 }
+
+
+
+
+
