@@ -20,7 +20,7 @@ namespace dotnet_5780_3958_6619
             int NumberRandom = Rnd.Next(1, difference.Days-1); //random a between 1 and how many days there are from the beginning of the year and today
             gs.EntryDate = beginningOfYear.AddDays(NumberRandom);
             //תגריל את מספר הימים לאירוח 2 עד 10 ימים 
-            int MyNumOfDays = rand.Next(2,10);
+            int MyNumOfDays = rand.Next(2,11);
             gs.lengthOfStay = MyNumOfDays;*/            
                         
             //GuestRequest gs = new GuestRequest();
