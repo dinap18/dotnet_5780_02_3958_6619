@@ -12,6 +12,14 @@ namespace dotnet_5780_3958_6619
         static Random rand = new Random(DateTime.Now.Millisecond);
         private static GuestRequest CreateRandomRequest()
         {
+            // (Eve) תגריל תאריך להתחלת האירוח בשנה הנוכחית
+            /*GuestRequest gs = new GuestRequest();
+            System.DateTime beginningOfYear = new System.DateTime(2019,01,01);
+            TimeSpan difference = DateTime.Now.Date - beginningOfYear.Date; //  calculating how many days there are from the beginning of the year to today
+            Random Rnd = new Random();
+            int NumberRandom = Rnd.Next(1, difference.Days); //random a between 1 and how many days there are from the beginning of the year and today
+            gs.EntryDate = beginningOfYear.AddDays(NumberRandom);*/            
+                        
             //GuestRequest gs = new GuestRequest();
             System.DateTime startOfYear = new System.DateTime(2019, 1, 1);
             System.DateTime endOfYear = new System.DateTime(2019, 12, 31);
