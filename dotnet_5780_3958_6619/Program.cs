@@ -17,7 +17,7 @@ namespace dotnet_5780_3958_6619
             System.DateTime beginningOfYear = new System.DateTime(2019,01,01);
             TimeSpan difference = DateTime.Now.Date - beginningOfYear.Date; //  calculating how many days there are from the beginning of the year to today
             Random Rnd = new Random();
-            int NumberRandom = Rnd.Next(1, difference.Days); //random a between 1 and how many days there are from the beginning of the year and today
+            int NumberRandom = Rnd.Next(1, difference.Days-1); //random a between 1 and how many days there are from the beginning of the year and today
             gs.EntryDate = beginningOfYear.AddDays(NumberRandom);
             //תגריל את מספר הימים לאירוח 2 עד 10 ימים 
             int MyNumOfDays = rand.Next(2,10);
