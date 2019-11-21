@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace dotnet_5780_3958_6619
 {
-    class GuestRequest
+    public class GuestRequest
     {
         int day, month, year;
         public int lengthOfStay;
