@@ -8,7 +8,7 @@ namespace dotnet_5780_3958_6619
 {
     class HostingUnit : GuestRequest, IComparable 
     {
-       public static int stSerialKey;
+       public static int stSerialKey=10000000;
         public bool[,] Diary = new bool[12, 31];
         public override string ToString()
         {
@@ -56,10 +56,10 @@ namespace dotnet_5780_3958_6619
 
      static int HostingUnitKey
         {
-            set { }
-            get { return stSerialKey; }
+            private set => stSerialKey++;
+            get => stSerialKey;
         }
-        public int[] host;
+       
     }
 }
 
