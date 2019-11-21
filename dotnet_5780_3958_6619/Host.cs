@@ -7,56 +7,52 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-    internal class Host : HostingUnit, IEnumerator
+    public class Host : IEnumerable
     {
-        public int HostKey { get; set; }
+        public int HostKey;
 
         public object Current => throw new NotImplementedException();
 
-        public List<HostingUnit> HostingUnitCollection;
+        public List<HostingUnit> HostingUnitCollection
+        {
+            private set => HostingUnitCollection = new List<HostingUnit>();
+            get => HostingUnitCollection;
+        }
 
         public Host(int id, int numOfPlaces)
         {
             HostKey = id;
-            IEnumerable<HostingUnit> e = HostingUnitCollection;
-
-            IEnumerator<HostingUnit> enumerator = e.GetEnumerator();
-            int counter = 0;
-            while (counter < numOfPlaces)
+            for (int i = 0; i < numOfPlaces; i++)
             {
-                for (int i = 0; i < 12; i++)
-                    for (int j = 0; j < 31; j++)
-                        enumerator.Current.Diary[i, j] = false;
-                enumerator.MoveNext();
+                HostingUnit newUnit = new HostingUnit();
+                HostingUnitCollection.Add(newUnit);
             }
-
 
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            string output = "the information for each unit  ";
+            foreach (var unit in HostingUnitCollection)
+                unit.ToString();
+            return output;
         }
         private long SubmitRequest(GuestRequest guestReq)
         {
-            if (ApproveRequest(guestReq))
-                return HostingUnitKey;
-            else
-                return -1;
+            foreach(var unit in HostingUnitCollection)
+                if (unit.ApproveRequest(guestReq))
+                    return unit.HostingUnitKey;
+            
+             return -1;
         }
         public int GetHostAnnualBusyDays()
         {
-            IEnumerable<HostingUnit> e = HostingUnitCollection;
-
-            IEnumerator<HostingUnit> enumerator = e.GetEnumerator();
             int counter = 0;
-           
+            foreach (var unit in HostingUnitCollection)
+            {
+                counter += unit.GetAnnualBusyDays();
+            }
 
-                foreach (var hostingunit in HostingUnitCollection)
-                {
-                   counter+= GetAnnualBusyDays();
-                }
-            
             return counter;
         }
         public void SortUnits()
@@ -70,43 +66,31 @@ namespace dotnet_5780_3958_6619
             {
                 if (SubmitRequest(requests[i]) == -1)
                     return false;
-                else
-                    return true;
+                
 
             }
-
-
-
-            return true;
+             return true;
         }
 
         public HostingUnit this[int serialKey]
         {
-                      
 
-        set
+
+            set { }
+            get
             {
-                if (serialKey==stSerialKey)
+                if (serialKey == HostingUnit.stSerialKey)
                 {
-                    return HostingUnitCollection[SerialKey];
+                    //HostingUnitCollection[serialKey];
 
                 }
+                return HostingUnit;
             }
-            get
-            {       }
-
-        public bool MoveNext()
-        {
-            throw new NotImplementedException();
         }
-
-        public void Reset()
+        public  IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
-        }
-        public int IEnumerator(object obj)
-        {
-            return 2;
+            for (int i = 0; i < HostingUnitCollection.Count; i++)
+                yield return HostingUnitCollection[i];
         }
     }
 }
