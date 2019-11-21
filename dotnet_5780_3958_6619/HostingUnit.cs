@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-    class HostingUnit : GuestRequest, IComparable 
+    public class HostingUnit : IComparable
     {
-       public static int stSerialKey=10000000;
+        public static int stSerialKey=10000000;
+        public int indexer = 0;
         public bool[,] Diary = new bool[12, 31];
         public override string ToString()
         {
-            return base.ToString();
+            return " ";
         }
         public bool ApproveRequest(GuestRequest guestReq)
         {
@@ -51,15 +52,20 @@ namespace dotnet_5780_3958_6619
         {
             return this.GetAnnualBusyDays().CompareTo(obj);
         }
+        public HostingUnit()
+        {
+            stSerialKey++;
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 31; j++)
+                    Diary[i,j] = false;
+        }
 
 
-
-     static int HostingUnitKey
+        public int HostingUnitKey
         {
             private set => stSerialKey++;
-            get => stSerialKey;
+            get => stSerialKey; 
         }
-       
     }
 }
 
