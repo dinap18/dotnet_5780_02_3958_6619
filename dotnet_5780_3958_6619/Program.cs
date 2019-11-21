@@ -12,19 +12,14 @@ namespace dotnet_5780_3958_6619
         static Random rand = new Random(DateTime.Now.Millisecond);
         private static GuestRequest CreateRandomRequest()
         {
-            GuestRequest gs = new GuestRequest();
-        System.DateTime today = new System.DateTime(2019, 11, 20);
-        System.DateTime todayAndElevenMonth = new System.DateTime(2019, 11, 20);
-
-            System.DateTime zero = new System.DateTime(2019, 0, 0);
-
-        // MOIS ET JOUR SEPARES ET CHOISIR AU PIF DANS LES ONAE MOIS PRECEDENT 
-         rand.Next=(0, 31);
-
-            todayAn
-
-
-            return gs;
+            //GuestRequest gs = new GuestRequest();
+            System.DateTime startOfYear = new System.DateTime(2019, 1, 1);
+            System.DateTime endOfYear = new System.DateTime(2019, 12, 31);
+            int range = (endOfYear - startOfYear).Days;
+            DateTime today = startOfYear.AddDays(rand.Next(range));
+            int length = rand.Next(2, 11);
+            GuestRequest gs = new GuestRequest(ref today, length);
+             return gs;
         }
         static void Main(string[] args)
         {
@@ -104,4 +99,4 @@ namespace dotnet_5780_3958_6619
 
 
     }
-}
+}
