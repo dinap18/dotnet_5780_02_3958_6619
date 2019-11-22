@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace dotnet_5780_3958_6619
     {
         public static int stSerialKey=10000000;
         public int indexer = 0;
-         public bool[,] Diary = new bool[12, 31];
+        public bool[,] Diary = new bool[12, 31];
         public override string ToString()
         {
             string output = "Unit Number:" + this.HostingUnitKey + "";
@@ -68,45 +68,37 @@ namespace dotnet_5780_3958_6619
         }
         public bool ApproveRequest(GuestRequest guestReq)
         {
+            if ((Diary[guestReq.EntryDate.Month-1, guestReq.EntryDate.Day-1] == true) || (Diary[guestReq.ReleaseDate.Month-1, guestReq.ReleaseDate.Day-1] == true))
+            {
+                return false;
+            }
 
-             //on passe sur la matrice AH NON PAS BESOIN
-            // si ya une suite de jour qui correspond au jour de la demande 
-            // alors ecrit dans la matrice que cest true 
-            // et ecrit dans la demande que isApproved egal a true
-            // et erenvoie true
-            //si pa tt la demande est executee renvoie false 
-            //un guest request est compose de lengthOfStay , EntryDate , ReleaseDate , IsApproved
-        
-                    if( (Diary[guestReq.EntryDate.Month, guestReq.EntryDate.Day] == true) || (Diary[guestReq.ReleaseDate.Month, guestReq.ReleaseDate.Day] == true))
-                    {
-                            return false;
-                    }
+            for (int k = 0; k < guestReq.lengthOfStay - 1; k++) //Verifie pr tt les jours du milieu du sejour
+            {
+                int month;
+                month = Convert.ToInt32((guestReq.EntryDate.Month));
+                if (guestReq.EntryDate.Day == 31)
+                { month++; }
+                DateTime added = (guestReq.EntryDate.AddDays(1));
 
-                    for (int k = 0; k < lengthOfStay-1; k++) //Verifie pr tt les jours du milieu du sejour
-                    {
-                            int month;
-                            month = Convert.ToInt32((guestReq.EntryDate.Month));
-                        if (guestReq.EntryDate.Day == 31)
-                        { month++; }
-                        DateTime added = (guestReq.EntryDate.AddDays(1));
+                if (Diary[month, k] == true)
+                    return false;
+            }
 
-                        if (Diary[month, k] == true)
-                            return false;
-                    }
+            for (int b = guestReq.EntryDate.Day; b < (guestReq.EntryDate.Day + guestReq.lengthOfStay - 1); b++)
+            {
+                int month;
+                month = Convert.ToInt32((guestReq.EntryDate.Month));
+                if (b == 31)
+                    month++;
 
-                        for (int b = EntryDate.Day; b < (EntryDate.Day + lengthOfStay-1); b++)
-                         {
-                            int month;
-                                month = Convert.ToInt32((guestReq.EntryDate.Month));
-                                if (b == 31)
-                                        month++;
+                Diary[month-1, b-1 ] = true;
+            }
+            guestReq.IsApproved = true;
 
-                            Diary[b,month] = true;
-                         }
-                        guestReq.IsApproved = true;
-                  
             return true;
         }
+            
         public int GetAnnualBusyDays()
         {
             int counter = 0;
@@ -137,7 +129,8 @@ namespace dotnet_5780_3958_6619
 
         int IComparable.CompareTo(object obj)
         {
-            return this.GetAnnualBusyDays().CompareTo(obj);
+            HostingUnit help = (HostingUnit)obj;
+            return Convert.ToInt32(this.GetAnnualBusyDays().CompareTo(help.GetAnnualBusyDays()));
         }
         public HostingUnit()
         {
@@ -155,8 +148,3 @@ namespace dotnet_5780_3958_6619
         }
     }
 }
-
-
-
-
-
