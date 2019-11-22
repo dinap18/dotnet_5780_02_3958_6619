@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,10 @@ namespace dotnet_5780_3958_6619
 
         public object Current => throw new NotImplementedException();
 
-        public List<HostingUnit> HostingUnitCollection
+        public List<HostingUnit> HostingUnitCollection=new List<HostingUnit>();
+        public List<HostingUnit>MyProperty
         {
-            private set => HostingUnitCollection = new List<HostingUnit>();
+            private set =>HostingUnitCollection = new List<HostingUnit>();
             get => HostingUnitCollection;
         }
 
@@ -75,18 +76,11 @@ namespace dotnet_5780_3958_6619
         public HostingUnit this[int serialKey]
         {
 
-
-            set { }
-            get
-            {
-                if (serialKey == HostingUnit.stSerialKey)
-                {
-                    //HostingUnitCollection[serialKey];
-
-                }
-                return HostingUnit;
-            }
+        
+            get { return HostingUnitCollection[serialKey]; }
+            set { HostingUnitCollection[serialKey] = value; }
         }
+    
         public  IEnumerator GetEnumerator()
         {
             for (int i = 0; i < HostingUnitCollection.Count; i++)
