@@ -10,10 +10,61 @@ namespace dotnet_5780_3958_6619
     {
         public static int stSerialKey=10000000;
         public int indexer = 0;
-        public bool[,] Diary = new bool[12, 31];
+         public bool[,] Diary = new bool[12, 31];
         public override string ToString()
         {
-            return " ";
+            string output = "Unit Number:" + this.HostingUnitKey + "";
+            int helpI = 0, helpJ = 0;
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 31; j++)
+                {
+                    helpI = i;
+                    helpJ = j;
+                    if (j != 0 && Diary[i, j] == true && Diary[i, --helpJ] == false)//prints the first date in the block if taken dates
+
+                    {
+                        output+= i+1 + "/" + j+1 + " / 2019   ";
+
+
+                    }
+                    helpJ = j;
+                    if (i != 0 && j == 0 && Diary[i, j] == true && Diary[--helpI, 30] == false)//prints the first date in the block if taken dates if j=0
+
+                    {
+                        output += i + 1 + "/" + j + 1 + " / 2019   ";
+
+
+                    }
+                    if (i == 0 && j == 0 && Diary[i, j] == true)//if january first is reserved there is no previous date to check
+                    {
+                        output += i + 1 + "/" + j + 1 + " / 2019   ";
+
+                    }
+
+                    helpI = i;
+                    //printing the final date in the block of dates
+                    if (Diary[i, j] == true && j != 30 && Diary[i, ++helpJ] == false)
+                    {
+                        output += i + 1 + "/" + j + 1 + " / 2019   @";
+
+                    }
+                    else
+
+                        if (Diary[i, j] == true && j == 30 && Diary[++helpI, 0] == false)
+                    {
+                        output += i + 1 + "/" + j + 1 + " / 2019   @";
+                        helpI = i;
+                    }
+                    else
+                        if (Diary[i, j] == true && Diary[i, helpJ] == false)
+                        output += i + 1 + "/" + j + 1 + " / 2019   @";
+                    else
+                        if (Diary[i, j] == true && i == 11 && j == 30)
+                        output += i + 1 + "/" + j + 1 + " / 2019   @";
+
+                }
+            output = output.Replace("@", Environment.NewLine);
+            return output;
         }
         public bool ApproveRequest(GuestRequest guestReq)
         {
