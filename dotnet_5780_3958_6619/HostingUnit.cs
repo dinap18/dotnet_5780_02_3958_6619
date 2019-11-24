@@ -12,9 +12,9 @@ namespace dotnet_5780_3958_6619
         public int indexer = 0;
         public bool[,] Diary = new bool[12, 31];
        
-        /* Eve's modification
-         public int stSerialKey = 10000000;
-        public bool[,] Diary = new bool[12, 31];
+        
+       
+        /*
         public override string ToString()
         {
            HostingUnit h = new HostingUnit ();
