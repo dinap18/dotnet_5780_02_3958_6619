@@ -76,9 +76,8 @@ namespace dotnet_5780_3958_6619
         public HostingUnit this[int serialKey]
         {
 
-        
-            get { return HostingUnitCollection[serialKey]; }
-            set { HostingUnitCollection[serialKey] = value; }
+        get { return this.HostingUnitCollection[serialKey]; }
+            set { this.HostingUnitCollection[serialKey] = value; }
         }
     
         public  IEnumerator GetEnumerator()
