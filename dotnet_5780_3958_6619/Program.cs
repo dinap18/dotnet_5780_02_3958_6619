@@ -12,18 +12,16 @@ namespace dotnet_5780_3958_6619
         static Random rand = new Random(DateTime.Now.Millisecond);
         private static GuestRequest CreateRandomRequest()
         {
-            // (Eve) תגריל תאריך להתחלת האירוח בשנה הנוכחית
             /*GuestRequest gs = new GuestRequest();
-            System.DateTime beginningOfYear = new System.DateTime(2019,01,01);
-            TimeSpan difference = DateTime.Now.Date - beginningOfYear.Date; //  calculating how many days there are from the beginning of the year to today
-            Random Rnd = new Random();
-            int NumberRandom = Rnd.Next(1, difference.Days-1); //random a between 1 and how many days there are from the beginning of the year and today
-            gs.EntryDate = beginningOfYear.AddDays(NumberRandom);
-            //תגריל את מספר הימים לאירוח 2 עד 10 ימים 
-            int MyNumOfDays = rand.Next(2,11);
-            gs.lengthOfStay = MyNumOfDays;*/            
-                        
-            //GuestRequest gs = new GuestRequest();
+          System.DateTime beginningOfYear = new System.DateTime(2019,1,1);
+          TimeSpan difference = DateTime.Now.Date - beginningOfYear.Date; //  calculating how many days there are from the beginning of the year to today
+          Random Rnd = new Random();
+          int NumberRandom = Rnd.Next(1, difference.Days-1); //random a between 1 and how many days there are from the beginning of the year and today
+          gs.EntryDate = beginningOfYear.AddDays(NumberRandom);
+          //תגריל את מספר הימים לאירוח 2 עד 10 ימים 
+          int MyNumOfDays = rand.Next(2,11);
+          gs.lengthOfStay = MyNumOfDays;*/
+           // GuestRequest gs = new GuestRequest();
             System.DateTime startOfYear = new System.DateTime(2019, 1, 1);
             System.DateTime endOfYear = new System.DateTime(2019, 12, 31);
             int range = (endOfYear - startOfYear).Days;
@@ -43,7 +41,7 @@ namespace dotnet_5780_3958_6619
              new Host(4, rand.Next(1,5)),
              new Host(5, rand.Next(1,5))
              };
-            GuestRequest gs1 = new GuestRequest();
+            GuestRequest gs1= new GuestRequest();
             GuestRequest gs2 = new GuestRequest();
             GuestRequest gs3 = new GuestRequest();
             for (int i = 0; i < 100; i++)
@@ -93,20 +91,22 @@ namespace dotnet_5780_3958_6619
                 //test indexer of Host
                 for (int i = 0; i < host.HostingUnitCollection.Count; i++)
                 {
-                    if (host[i].HostingUnitKey == maxKey)
-                    {
+                   
+                        if (host[i].HostingUnitKey == maxKey)
+                        {
                         //sort this host by occupancy of its units
                         host.SortUnits();
                         //print this host detailes
                         Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
-                        
-                         Console.WriteLine(host);
+
+                        Console.WriteLine(host);
                         break;
                     }
                 }
             }
+            Console.ReadKey();
         }
-
+       
 
 
     }

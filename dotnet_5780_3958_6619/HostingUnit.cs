@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,48 +11,9 @@ namespace dotnet_5780_3958_6619
         public static int stSerialKey=10000000;
         public int indexer = 0;
         public bool[,] Diary = new bool[12, 31];
-       
-        
-       
-        /*
         public override string ToString()
         {
-           HostingUnit h = new HostingUnit ();
-           Console.WriteLine(h.stSerialKey); // but its not normally that the stserialkey is the same for all unit (so i delete the static)
-          for (int i=0;i<12;i++)
-                    for (int j=0;j<31;j++)
-                    {           int helpI = i;
-                                int  helpJ = j;
-                            if (j != 0 && Diary[i, j] == true && Diary[i, --helpJ] == false)//prints the first date in the block if taken dates
-                            {Console.Write(i + "/" + j + "  ");}
-                            helpJ = j;
-                            if (i != 0 && j == 0 && Diary[i, j] == true && Diary[--helpI, 30] == false)//prints the first date in the block if taken dates if j=0
-                            { Console.Write(i + "/" + j + "  "); }
-                            if (i == 0 && j == 0 && Diary[i, j] == true)//if january first is reserved there is no previous date to check
-                            { Console.Write(i + "/" + j + "  ");}
-                            helpI = i;
-                            //printing the final date in the block of dates
-                            if (Diary[i, j] == true && j != 30 && Diary[i, ++helpJ] == false)
-                            { Console.WriteLine(i + "/" + j + "  ");}
-                            else
-                            if (Diary[i, j] == true && j == 30 && Diary[++helpI, 0] == false)
-                                {Console.WriteLine(i + "/" + j + "  ");
-                                 helpI = i; }
-                            else
-                                if (Diary[i, j] == true && Diary[i, helpJ] == false)
-                                Console.WriteLine(i + "/" + j + "  ");
-                            else
-                                if (Diary[i, j] == true && i == 11 && j == 30)
-                                Console.WriteLine(i + "/" + j + "  "); }
-
-                          return h.ToString(); }
-        
-        */
-        
-        
-        public override string ToString()
-        {
-            string output = "Unit Number:" + this.HostingUnitKey + "";
+            string output = "Unit Number:     " + this.HostingUnitKey + " @  ";
             int helpI = 0, helpJ = 0;
             for (int i = 0; i < 12; i++)
                 for (int j = 0; j < 31; j++)
@@ -117,7 +78,10 @@ namespace dotnet_5780_3958_6619
                 int month;
                 month = Convert.ToInt32((guestReq.EntryDate.Month));
                 if (guestReq.EntryDate.Day == 31)
-                { month++; }
+                {
+                    month++;
+                  
+                }
                 DateTime added = (guestReq.EntryDate.AddDays(1));
 
                 if (Diary[month, k] == true)
@@ -182,8 +146,8 @@ namespace dotnet_5780_3958_6619
 
         public int HostingUnitKey
         {
-            private set => stSerialKey++;
-            get => stSerialKey; 
+            private set { stSerialKey++; }
+            get { return stSerialKey; }
         }
     }
 }

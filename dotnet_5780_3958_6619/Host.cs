@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +14,10 @@ namespace dotnet_5780_3958_6619
         public object Current => throw new NotImplementedException();
 
         public List<HostingUnit> HostingUnitCollection=new List<HostingUnit>();
-        public List<HostingUnit>MyProperty
+        public List<HostingUnit>MyList
         {
-            private set =>HostingUnitCollection = new List<HostingUnit>();
-            get => HostingUnitCollection;
+            private set { HostingUnitCollection = new List<HostingUnit>(); }
+            get { return HostingUnitCollection; }
         }
 
         public Host(int id, int numOfPlaces)
@@ -35,8 +35,8 @@ namespace dotnet_5780_3958_6619
         {
             string output = "the information for each unit  ";
             foreach (var unit in HostingUnitCollection)
-                unit.ToString();
-            return output;
+                 return unit.ToString();
+           return output;
         }
         private long SubmitRequest(GuestRequest guestReq)
         {
@@ -73,11 +73,12 @@ namespace dotnet_5780_3958_6619
              return true;
         }
 
-        public HostingUnit this[int serialKey]
+        public HostingUnit this[int key]
         {
 
-        get { return this.HostingUnitCollection[serialKey]; }
-            set { this.HostingUnitCollection[serialKey] = value; }
+        
+            get { return this.HostingUnitCollection[key]; }
+            set { this.HostingUnitCollection[key] = value; }
         }
     
         public  IEnumerator GetEnumerator()
