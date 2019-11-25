@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace dotnet_5780_3958_6619
 {
     public class Host : IEnumerable
@@ -34,8 +33,8 @@ namespace dotnet_5780_3958_6619
         public override string ToString()
         {
             string output = "the information for each unit  ";
-            foreach (var unit in HostingUnitCollection)
-                 return unit.ToString();
+           foreach (var unit in this.HostingUnitCollection)
+                return unit.ToString();
            return output;
         }
         private long SubmitRequest(GuestRequest guestReq)
