@@ -92,23 +92,30 @@ namespace dotnet_5780_3958_6619
                     return false;
             }
 
-            for (int b = guestReq.EntryDate.Day; b < (guestReq.EntryDate.Day + guestReq.lengthOfStay - 1); b++)
-            {
-                int month;
-                int day=b;
-                month = Convert.ToInt32((guestReq.EntryDate.Month));
-                if (b == 31)
+             int helper = guestReq.lengthOfStay;
+            for (int i = guestReq.EntryDate.Month; i < 12; i++)//switches the dates to true
+                for (int j = 0; j < 31; j++)
                 {
-                    month++;
-                    day = 0;
+                    if ((j >= guestReq.EntryDate.Day && guestReq.EntryDate.Day < 31) || (helper > 0 && helper <= guestReq.lengthOfStay))
+                    {
+                        if (helper < guestReq.lengthOfStay)
+                        {
+                            Diary[i, j] = true;
+                            helper++;
+                        }
+                    }
+
+                    if (guestReq.EntryDate.Day == 30)
+                        j = 0;
+                    if (helper == guestReq.lengthOfStay)
+                        break;
                 }
-                else
-                    day -= 1;
-                Diary[month-1, day ] = true;
-            }
+
             guestReq.IsApproved = true;
 
             return true;
+
+
         }
             
         public int GetAnnualBusyDays()
