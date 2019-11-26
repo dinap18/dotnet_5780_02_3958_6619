@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace dotnet_5780_3958_6619
 {
-    public class GuestRequest
+   public class GuestRequest
     {
         int day, month, year;
         public int lengthOfStay;
@@ -14,15 +14,15 @@ namespace dotnet_5780_3958_6619
         public bool IsApproved;
         public override string ToString()
         {
-            return "entry date: {0},  release date: {1},  is approved:  {this.EntryDate,this.ReleaseDate,this.isApproved }";
+            return "entry date:" + this.EntryDate + "  release date:" + this.ReleaseDate + "is approved: " + this.IsApproved;
         }
         public GuestRequest()
         {
             this.IsApproved = false;
         }
-        public GuestRequest(ref DateTime arrival,int length)
+        public GuestRequest(DateTime arrival, int length)
         {
-            EntryDate = arrival ;
+            EntryDate = arrival;
             year = arrival.Year;
             day = arrival.Day;
             month = arrival.Month;
@@ -34,7 +34,8 @@ namespace dotnet_5780_3958_6619
             }
             else
                 day = day + length;
-            ReleaseDate = new DateTime(year, month, day);
+
+           //ReleaseDate = new DateTime(day, month,2020 );
         }
     }
 
