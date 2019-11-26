@@ -12,23 +12,16 @@ namespace dotnet_5780_3958_6619
         static Random rand = new Random(DateTime.Now.Millisecond);
         private static GuestRequest CreateRandomRequest()
         {
-            /*GuestRequest gs = new GuestRequest();
-          System.DateTime beginningOfYear = new System.DateTime(2019,1,1);
-          TimeSpan difference = DateTime.Now.Date - beginningOfYear.Date; //  calculating how many days there are from the beginning of the year to today
-          Random Rnd = new Random();
-          int NumberRandom = Rnd.Next(1, difference.Days-1); //random a between 1 and how many days there are from the beginning of the year and today
-          gs.EntryDate = beginningOfYear.AddDays(NumberRandom);
-          //תגריל את מספר הימים לאירוח 2 עד 10 ימים 
-          int MyNumOfDays = rand.Next(2,11);
-          gs.lengthOfStay = MyNumOfDays;*/
-           // GuestRequest gs = new GuestRequest();
-            System.DateTime startOfYear = new System.DateTime(2019, 1, 1);
-            System.DateTime endOfYear = new System.DateTime(2019, 12, 31);
-            int range = (endOfYear - startOfYear).Days;
-            DateTime today = startOfYear.AddDays(rand.Next(range));
+            GuestRequest gs = new GuestRequest();
+            DateTime beginningOfYear = new System.DateTime(2020, 1, 1);
+            DateTime endOfYear = new System.DateTime(2020, 12, 31);
+            TimeSpan difference = endOfYear.Date - beginningOfYear.Date;
+            int range = (endOfYear - beginningOfYear).Days;
+            DateTime today = beginningOfYear.AddDays(rand.Next(range));
             int length = rand.Next(2, 11);
-            GuestRequest gs = new GuestRequest(ref today, length);
-             return gs;
+            gs = new GuestRequest(today, length);
+           Console.WriteLine(gs) ;
+            return gs;
         }
         static void Main(string[] args)
         {
@@ -41,73 +34,82 @@ namespace dotnet_5780_3958_6619
              new Host(4, rand.Next(1,5)),
              new Host(5, rand.Next(1,5))
              };
-            GuestRequest gs1= new GuestRequest();
-            GuestRequest gs2 = new GuestRequest();
-            GuestRequest gs3 = new GuestRequest();
             for (int i = 0; i < 100; i++)
             {
                 foreach (var host in lsHosts)
                 {
-                    if (!gs1.IsApproved)
-                        gs1 = CreateRandomRequest();
-                    if (!gs2.IsApproved)
-                        gs2 = CreateRandomRequest();
-                    if (!gs3.IsApproved)
-                        gs3 = CreateRandomRequest();
+
+                    GuestRequest gs1 = CreateRandomRequest();
+                    GuestRequest gs2 = CreateRandomRequest();
+                    GuestRequest gs3 = CreateRandomRequest();
                     switch (rand.Next(1, 4))
                     {
                         case 1:
-                            host.AssignRequests(gs1);
+                               host.AssignRequests(gs1);
                             break;
                         case 2:
-                            host.AssignRequests(gs1, gs2);
+                            //  host.AssignRequests(gs1, gs2);
                             break;
                         case 3:
-                            host.AssignRequests(gs1, gs2, gs3);
+                            //   host.AssignRequests(gs1, gs2, gs3);
                             break;
                         default:
                             break;
                     }
                 }
             }
-            //Create dictionary for all units <unitkey, occupancy_percentage>
-            Dictionary<long, float> dict = new Dictionary<long, float>();
-            foreach (var host in lsHosts)
-            {
-                //test Host IEnuramble is ok
-                foreach (HostingUnit unit in host)
-                {
-                    dict[unit.HostingUnitKey] = unit.GetAnnualBusyPercentage();
-                }
-            }
-            //get max value in dictionary
-            float maxVal = dict.Values.Max();
-            //get max value key name in dictionary
-            long maxKey =
-           dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
-            //find the Host that its unit has the maximum occupancy percentage
-            foreach (var host in lsHosts)
-            {
-                //test indexer of Host
-                for (int i = 0; i < host.HostingUnitCollection.Count; i++)
-                {
-                   
-                        if (host[i].HostingUnitKey == maxKey)
-                        {
-                        //sort this host by occupancy of its units
-                        host.SortUnits();
-                        //print this host detailes
-                        Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
+            // //Create dictionary for all units <unitkey, occupancy_percentage>
+            // Dictionary<long, float> dict = new Dictionary<long, float>();
+            // foreach (var host in lsHosts)
+            // {
+            //     //test Host IEnuramble is ok
+            //     foreach (HostingUnit unit in host)
+            //     {
+            //         dict[unit.HostingUnitKey] = unit.GetAnnualBusyPercentage();
+            //     }
+            // }
+            // //get max value in dictionary
+            // float maxVal = dict.Values.Max();
+            // //get max value key name in dictionary
+            // long maxKey =
+            //dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
+            // //find the Host that its unit has the maximum occupancy percentage
+            // foreach (var host in lsHosts)
+            // {
+            //     //test indexer of Host
+            //     for (int i = 0; i < host.HostingUnitCollection.Count; i++)
+            //     {
+            //         if (host[i].HostingUnitKey == maxKey)
+            //         {
+            //             //sort this host by occupancy of its units
+            //             host.SortUnits();
+            //             //print this host detailes
+            //             Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
 
-                        Console.WriteLine(host);
-                        break;
-                    }
-                }
-            }
+            //              Console.WriteLine(host);
+            //             break;
+            //         }
+            //     }
+
+            // }
+            //int a, b;
+            //foreach (var host in lsHosts)
+            //{
+            //    //test indexer of Host
+            //    for (int i = 0; i < host.HostingUnitCollection.Count; i++)
+            //    {
+            //        for (int ii = 0; ii < 12; ii++)
+            //            for (int j = 0; j < 31; j++)
+            //                if (host[i].Diary[ii, j] == true)
+            //                {
+            //                    a = ii;
+            //                    b = j;
+            //                    Console.WriteLine(a + "/" + b);
+            //                }
+            //    }
+            //}
             Console.ReadKey();
         }
        
-
-
     }
 }
