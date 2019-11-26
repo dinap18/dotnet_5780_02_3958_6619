@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace dotnet_5780_3958_6619
 {
-    public class Host : IEnumerable
+      public class Host : IEnumerable
     {
         public int HostKey;
 
@@ -32,9 +32,12 @@ namespace dotnet_5780_3958_6619
 
         public override string ToString()
         {
-            string output = "the information for each unit  ";
-           foreach (var unit in this.HostingUnitCollection)
-                return unit.ToString();
+
+            string output= "";
+            
+                for(int i=0;i< this.HostingUnitCollection.Count;i++)
+                   return this.HostingUnitCollection[i].ToString();
+                  
            return output;
         }
         private long SubmitRequest(GuestRequest guestReq)
@@ -84,6 +87,10 @@ namespace dotnet_5780_3958_6619
         {
             for (int i = 0; i < HostingUnitCollection.Count; i++)
                 yield return HostingUnitCollection[i];
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator)GetEnumerator();
         }
     }
 }
