@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace dotnet_5780_3958_6619
 {
-  public class HostingUnit : IComparable
+    public class HostingUnit : IComparable
     {
-        public static int stSerialKey = 10000000;
+        private static int stSerialKey = 10000000;
         public bool[,] Diary = new bool[12, 31];
-        public override string ToString()
+        public int HostingUnitKey;
+
+        public override string ToString() //converts a hosting unit into string form so it can be printed
         {
             int help = 0;
             string output = "Unit Number: " + HostingUnitKey + " @";
@@ -18,7 +20,7 @@ namespace dotnet_5780_3958_6619
             for (int i = 0; i < 12; i++)
                 for (int j = 0; j < 31; j++)
                 {
-                   
+
                     help = j + 1;
                     helpI = i;
                     helpJ = j;
@@ -26,7 +28,7 @@ namespace dotnet_5780_3958_6619
 
                     {
 
-                        output += i + 1 + "/" + help + "/2020  ";
+                        output += i + 1 + "/" + help + "/2020  - ";
 
 
                     }
@@ -34,13 +36,13 @@ namespace dotnet_5780_3958_6619
                     if (i != 0 && j == 0 && Diary[i, j] == true && Diary[--helpI, 30] == false)//prints the first date in the block if taken dates if j=0
 
                     {
-                        output += i + 1 + "/" + help + "/2020  ";
+                        output += i + 1 + "/" + help + "/2020  - ";
 
 
                     }
                     if (i == 0 && j == 0 && Diary[i, j] == true)//if january first is reserved there is no previous date to check
                     {
-                        output += i + 1 + "/" + help + "/2020   ";
+                        output += i + 1 + "/" + help + "/2020   - ";
 
                     }
 
@@ -66,60 +68,42 @@ namespace dotnet_5780_3958_6619
                         output += i + 1 + "/" + help + "/2020  @";
 
                 }
-            output = output.Replace("@", Environment.NewLine);
+            output += "@";
+            output = output.Replace("@", Environment.NewLine); // adds a new line to the output string
             return output;
         }
-        public bool ApproveRequest(GuestRequest guestReq)
+        public bool ApproveRequest(GuestRequest guestReq) // checks the matrix and if able to, approves a vacation request
         {
             int helper = 0;
-            for (int i = guestReq.EntryDate.Month; i < 12; i++)//switches the dates to true
+            int timeOfStay=(guestReq.lengthOfStay-1); // minus one because we are reserving the amount of nights stayed and not the amount of days
+            for (int i = guestReq.EntryDate.Month-1; i < 12; i++)// checks if the dates are taken
                 for (int j = 0; j < 31; j++)
                 {
-                    if (helper <(guestReq.lengthOfStay - 1))
-                     
-                        if ((j >=( guestReq.EntryDate.Day-1) && (guestReq.EntryDate.Day-1 )< 31) || (helper > 0 && helper <= (guestReq.lengthOfStay - 1)))
+                    if (helper < timeOfStay)
                     {
-                        if (helper < guestReq.lengthOfStay - 1)
+                        if ((j >= (guestReq.EntryDate.Day -1 ) ) || (helper > 0 && helper < timeOfStay))
                         {
-                           if( this.Diary[i, j] == true)
-
+                            if (helper < timeOfStay )
                             {
-                            
-                                guestReq.IsApproved = false;
-                                return false;
+                                if (this.Diary[i, j] == true)
+
+                                {
+
+                                    guestReq.IsApproved = false;
+                                    return false;
+                                }
                             }
                         }
+
+
+
                     }
-
-                    if (guestReq.EntryDate.Day-1 == 30)
-                        j = 0;
-                    
-                        
                 }
-            //if ((Diary[guestReq.EntryDate.Month - 1, guestReq.EntryDate.Day - 1] == true) || (Diary[guestReq.ReleaseDate.Month - 1, guestReq.ReleaseDate.Day - 1] == true))
-            //{
-            //    return false;
-            //}
-            // for (int k = 0; k < guestReq.lengthOfStay -1 ; k++) //Verifie pr tt les jours du milieu du sejour
-            //{
-            //    int month;
-            //    int day = k;
-            //    month = Convert.ToInt32((guestReq.EntryDate.Month));
-            //    if (guestReq.EntryDate.Month != 12 && guestReq.EntryDate.Day == 31)
-            //    {
-            //        month++;
-            //        day = 0;
-            //    }
-            //    DateTime added = (guestReq.EntryDate.AddDays(1));
-
-            //    if (Diary[month - 1, day] == true)
-            //        return false;
-       // }
             helper = 0;
-            for (int i = guestReq.EntryDate.Month; i < 12; i++)//switches the dates to true
+            for (int i = guestReq.EntryDate.Month -1; i < 12; i++)//switches the dates to true
                 for (int j = 0; j < 31; j++)
                 {
-                    if (helper == (guestReq.lengthOfStay - 1))
+                    if (helper == (timeOfStay ))
 
                     {
                         guestReq.IsApproved = true;
@@ -127,25 +111,21 @@ namespace dotnet_5780_3958_6619
                         return true;
                     }
                     else
-                    if ((j >= guestReq.EntryDate.Day-1 && guestReq.EntryDate.Day-1 < 31) || (helper > 0 && helper <= guestReq.lengthOfStay-1))
+                    if ((j >= (guestReq.EntryDate.Day - 1 ) )|| (helper > 0 && helper <= timeOfStay ))
                     {
-                        if (helper < guestReq.lengthOfStay-1)
-                        {
-                           this. Diary[i, j] = true;
+                      
+                            this.Diary[i, j] = true;
                             helper++;
-                        }
+                        
                     }
 
-                    if (guestReq.EntryDate.Day-1 == 30)
-                        j = 0;
-                    
                 }
 
 
             return true;
 
         }
-        public int GetAnnualBusyDays()
+        public int GetAnnualBusyDays() // returns the amount of days taken
         {
             int counter = 0;
             for (int i = 0; i < 12; i++)
@@ -159,7 +139,7 @@ namespace dotnet_5780_3958_6619
             }
             return counter;
         }
-        public float GetAnnualBusyPercentage()
+        public float GetAnnualBusyPercentage() //returns percent of year that is taken
         {
             float counter = 0;
             for (int i = 0; i < 12; i++)
@@ -173,24 +153,20 @@ namespace dotnet_5780_3958_6619
             return (float)(counter / 3.75);
         }
 
-        int IComparable.CompareTo(object obj)
+        int IComparable.CompareTo(object obj) // function to determine how to sort hosting units
         {
             HostingUnit help = obj as HostingUnit;
             return Convert.ToInt32(this.GetAnnualBusyDays().CompareTo(help.GetAnnualBusyDays()));
         }
-        public HostingUnit()
+        public HostingUnit() // constructor
         {
-            stSerialKey++;
+           HostingUnitKey= stSerialKey++;
             for (int i = 0; i < 12; i++)
                 for (int j = 0; j < 31; j++)
-                    Diary[i,j] = false;
+                    Diary[i, j] = false;
         }
 
 
-        public  int HostingUnitKey
-        {
-            private set { ++stSerialKey; }
-            get { return stSerialKey; }
-        }
+       
     }
 }

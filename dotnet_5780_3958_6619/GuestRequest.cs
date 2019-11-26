@@ -1,41 +1,30 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace dotnet_5780_3958_6619
 {
-   public class GuestRequest
+    public class GuestRequest
     {
-        int day, month, year;
+        
         public int lengthOfStay;
         public DateTime EntryDate;
         public DateTime ReleaseDate;
         public bool IsApproved;
-        public override string ToString()
+        public override string ToString() // switches request to string form for printing
         {
             return "entry date:" + this.EntryDate + "  release date:" + this.ReleaseDate + "is approved: " + this.IsApproved;
         }
-        public GuestRequest()
+        public GuestRequest() // constructor
         {
             this.IsApproved = false;
         }
         public GuestRequest(DateTime arrival, int length)
         {
             EntryDate = arrival;
-            year = arrival.Year;
-            day = arrival.Day;
-            month = arrival.Month;
             lengthOfStay = length;
-            if (length + day > 31)
-            {
-                day = day + length - 31;
-                month++;
-            }
-            else
-                day = day + length;
-
-           //ReleaseDate = new DateTime(day, month,2020 );
+            ReleaseDate = EntryDate.AddDays(lengthOfStay);// real date form - there isnt 31 days in each month
         }
     }
 
